@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Text Summarizer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    textarea { width: 100%; max-width: 800px; height: 200px; }
+    #output { 
+      background: #f4f4f4; 
+      padding: 15px; 
+      white-space: pre-wrap; 
+      border-radius: 5px;
+      min-height: 100px;
+    }
+    .error { color: red; background: #ffe6e6; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>AI Text Summarizer</h2>
+
+  <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+  <br><br>
+
+  <input type="file" id="fileInput" accept=".txt,.pdf" />
+  <br><br>
+
+  <button onclick="summarize()">Summarize</button>
+
+  <h3>Summary:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    async function summarize() {
+      const output = document.getElementById("output");
+      output.classList.remove("error");
+      output.innerText = "Processing... Please wait";
+
+      const text = document.getElementById("textInput").value.trim();
+      const file = document.getElementById("fileInput").files[0];
+
+      const formData = new FormData();
+
+      if (file) {
+        formData.append("file", file);
+      } else if (text) {
+        formData.append("text", text);
+      } else {
+        output.classList.add("error");
+        output.innerText = "Please enter some text or upload a PDF file.";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/summarize", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Server Error: ${res.status} - ${errorText}`);
+        }
+
+        const data = await res.json();
+
+        if (data.summary) {
+          output.innerText = data.summary;
+        } else {
+          output.classList.add("error");
+          output.innerText = data.error || "No summary received.";
+        }
+
+      } catch (err) {
+        console.error(err);
+        output.classList.add("error");
+        output.innerText = "Failed to connect to server.\nMake sure backend is running on port 5000.";
+      }
+    }
+  </script>
+</body>
+</html>

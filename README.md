@@ -1,16 +1,17 @@
-AI Text Summarizer
+# AI Text Summarizer
 
 
- Project Overview
+# Project Overview
 
 AI Text Summarizer is a full-stack web application that summarizes large text or PDF documents using Artificial Intelligence.
-Users can:
+
+# Users can:
 Enter manual text
 Upload PDF files
 Generate concise summaries instantly
 
 
-The project uses:
+# The project uses:
 
 React.js for frontend
 Node.js + Express.js for backend
@@ -18,31 +19,39 @@ Hugging Face AI API for summarization
 pdf-parse for extracting text from PDF files
 
 
- Features
+ # Features
 
 ✅ Manual text summarization
+
 ✅ PDF upload support
+
 ✅ AI-generated summaries
+
 ✅ Handles large text using chunking
+
 ✅ REST API integration
+
 ✅ React frontend UI
+
 ✅ Express backend server
+
 ✅ Error handling
 
 
- Technologies Used
+# Technologies Used
 
-Frontend
-React.js
-Axios
-Backend
-Node.js
-Express.js
-Multer
-pdf-parse
-AI API
-Hugging Face Inference API
-facebook/bart-large-cnn model
+* Frontend
+* react.js
+* Axios
+* Backend
+* Node.js
+* Express.js
+* Multer
+* Pdf_parse
+* AI API
+* Hugging Face Inference API
+* Facebook/bart-large-cnn model
+  
 
 Project Structure
   ``````````
